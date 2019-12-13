@@ -1,13 +1,13 @@
 const express = require('express');
 const Project = require('./resources');
-const db = require('./Data/dbConfig')
+const db = require('./Data/dbConfig');
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    Project.findProjects()
-        .then(proj => {
-            res.json(proj);
+    Project.findTasks()
+        .then(task => {
+            res.json(task);
         })
         .catch(err => {
             res.status(500).json({ message: 'Failed to get projects' });
@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
     const { id } = req.params;
-    Project.findProjectsById(id)
+    Project.findTasks(id)
         .then(proj => {
             if (proj) {
                 res.json(proj);

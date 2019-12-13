@@ -32,7 +32,7 @@ exports.up = function (knex) {
             tbl.increments('id').unique();
             tbl.string('resource_name').notNullable();
             tbl.string('description');
-            // tbl.integer('projects_id').notNullable().references('id').inTable('projects').onUpdate("CASCADE")
+            tbl.integer('projects_id').notNullable().references('id').inTable('projects').onUpdate("CASCADE")
 
         })
         .createTable('tasks', (tbl) => {
