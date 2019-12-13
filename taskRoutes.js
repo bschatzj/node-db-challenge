@@ -4,8 +4,8 @@ const db = require('./Data/dbConfig');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    Project.findTasks()
+router.get('/:id', (req, res) => {
+    Project.findTasks(req.params)
         .then(task => {
             res.json(task);
         })
@@ -14,30 +14,16 @@ router.get('/', (req, res) => {
         });
 });
 
-router.get('/:id', (req, res) => {
-    const { id } = req.params;
-    Project.findTasks(id)
-        .then(proj => {
-            if (proj) {
-                res.json(proj);
-            } else {
-                res.status(404).json({ message: 'Could not find project with id.' })
-            }
-        })
-        .catch(err => {
-            res.status(500).json({ message: 'Server Error' });
-        });
-});
 
-router.post('/:id/project', (req, res) => {
+router.post('/:id', (req, res) => {
     const projData = req.body;
-
-    Project.insertProject(projData)
+    const id = req.params
+    Project.insertTask(projData, id)
         .then(proj => {
             res.status(201).json(proj);
         })
         .catch(err => {
-            res.status(500).json({ message: 'Failed to post to project' });
+            res.status(500).json({ message: 'Failed to post task to project' });
         });
 });
 
